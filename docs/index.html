@@ -8,12 +8,9 @@
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
   <body>
-  <!-- ①モーション許可のボタン追加 -->
     <button type="button" id="request_permission">モーションの許可</button><br>
     <div id="unity-container" class="unity-desktop">
       <canvas id="unity-canvas"></canvas>
-    <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
@@ -27,11 +24,7 @@
         <div id="unity-build-title">Odajima</div>
       </div>
     </div>
-    <div id="unity-build-title">Test_get_location_at_webgl</div>
-      </div>
-    </div>
     <script type="text/javascript">
-	// ②ボタン押下時のアクションを追加
         document.getElementById("request_permission").addEventListener("click", function(){
           if (
             DeviceOrientationEvent &&

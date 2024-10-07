@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
   <body>
-  	<button type="button" id="request_permission">モーションの許可</button><br>
     <div id="unity-container" class="unity-desktop">
       <canvas id="unity-canvas" width=1080 height=1920 tabindex="-1"></canvas>
       <div id="unity-loading-bar">
@@ -24,23 +23,6 @@
         <div id="unity-build-title">Odajima</div>
       </div>
     </div>
-    <script type="text/javascript">
-        if (typeof DeviceMotionEvent.requestPermission === 'function') {
-    		DeviceMotionEvent.requestPermission().then(permissionState => {
-        		if (permissionState === 'granted') {
-            		// ジャイロセンサーのデータ取得を開始
-            		window.addEventListener('deviceorientation', function(event) {
-                	// ここでデータを処理する
-            		});
-        		}
-    		}).catch(console.error);
-		} else {
-    		// デフォルトの動作（許可不要なデバイス）
-    		window.addEventListener('deviceorientation', function(event) {
-        // ここでデータを処理する
-    		});
-		}
-    </script>
     <script>
       var canvas = document.querySelector("#unity-canvas");
 
@@ -90,10 +72,26 @@
       // the canvas DOM size and WebGL render target sizes yourself.
       // config.matchWebGLToCanvasSize = false;
 
-      
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // Mobile device style: fill the whole browser client area with the game canvas:
+
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
+        document.querySelector("#unity-container").className = "unity-mobile";
+        canvas.className = "unity-mobile";
+
+        // To lower canvas resolution on mobile devices to gain some
+        // performance, uncomment the following line:
+        // config.devicePixelRatio = 1;
+
+
+      } else {
         // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
         canvas.style.width = "1080px";
         canvas.style.height = "1920px";
+      }
 
       document.querySelector("#unity-loading-bar").style.display = "block";
 
